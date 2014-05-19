@@ -183,16 +183,34 @@ class TerminalTest(unittest.TestCase):
     def test_tv_4(self):
         """ Тестирование страницы после заказа и сообщения на ней """
         self.stat = 0
+
+        store_shop = self.session.query(Shops.db_sort_field).\
+                        join(Region, Shops.city_id == Region.id).\
+                        filter(Shops.active == 1).\
+                        filter(Shops.flag_store_shop_kbt == 1).\
+                        filter(Region.domain == self.CITY).\
+                        first()
+        if store_shop != None:
+            store_shop = store_shop[0]
+        else:
+            store_shop = self.session.query(Shops.db_sort_field).\
+                         filter(Shops.id == self.session.query(Region.supplier_id).filter(Region.domain == self.CITY).first()[0]).\
+                         first()[0]
       
               
         item = self.session.query(Goods.alias).\
                join(Goods_stat, Goods.id == Goods_stat.goods_id).\
                join(Region, Goods_stat.city_id == Region.id).\
+               join(Goods_block, Goods.block_id == Goods_block.id).\
                join(Goods_price, Goods.id == Goods_price.goods_id ).\
+               join(Remains, Remains.goods_id == Goods.id).\
                filter(Region.domain == self.CITY).\
                filter(Goods_stat.status == 1).\
+               filter(Goods.overall_type == 0).\
+               filter(Goods_block.delivery_type == 1).\
                filter(Goods_price.price_type_guid == Region.price_type_guid).\
                filter(Goods_price.price > 2000).\
+               filter('t_goods_remains.%s > 0' % store_shop).\
                first()
 
         driver = webdriver.Firefox(self.profile)
@@ -208,11 +226,7 @@ class TerminalTest(unittest.TestCase):
         driver.get('%sbasket/' % self.ADRESS)
         time.sleep(5)
         #теперь нужно выбрать доставку, чтобы посмотреть появилась ли ссылка на дополнение адреса из профиля Яндекс
-        deliv = driver.find_element_by_class_name('deliv').find_element_by_class_name('dfleft')
-        deliv = deliv.find_element_by_tag_name('span')
-        deliv.click()
-        deliv = driver.find_element_by_class_name('deliveryDescription')
-        deliv.click()
+        driver.find_element_by_css_selector("div.dcityContainer > span.radio").click()
 
         try:# проверка на то, есть ли ссылка на дополнение адреса из профиля Яндекс
             driver.find_element_by_class_name('control-group_address').find_element_by_tag_name('a')
