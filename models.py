@@ -80,4 +80,8 @@ class Warranty( Base ):
     __tablename__= 't_goods_block_warranty'
     goods_id=Column( Integer, ForeignKey('t_goods_block.id'), primary_key=True)
     block_id=Column( Integer, primary_key=True)
+
+class Remains( Base ):
+    __tablename__="t_goods_remains"#, metadata,
+    goods_id = Column(Integer, ForeignKey('t_goods.id'), primary_key=True )
         
