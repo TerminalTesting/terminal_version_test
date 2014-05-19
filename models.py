@@ -49,6 +49,18 @@ class Region( Base ):
     domain=Column( Unicode)
     price_type_guid=Column( String())
 
+class Shops( Base ):
+    """Магазины региона"""
+    __tablename__="t_shops"#, metadata,
+    id=Column(Integer, primary_key=True)
+    active = Column(Integer)
+    city_id=Column(Integer, ForeignKey('t_cities.id'))
+    flag_no_self_delivery_kbt = Column( Integer)
+    flag_no_self_delivery = Column( Integer)
+    flag_store_shop = Column( Integer)
+    flag_store_shop_kbt = Column( Integer)
+    db_sort_field = Column( Unicode )
+
 class Goods_price( Base ):
     """ Цены товара """
     __tablename__='t_goods_prices'#, metadata,
