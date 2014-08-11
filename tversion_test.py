@@ -241,6 +241,7 @@ class TerminalTest(unittest.TestCase):
                 
         driver.find_element_by_id('personal_order_form_comment').send_keys('AutoTEST ORDER - TerminalVersion signs script')
         driver.find_element_by_class_name('btn-primary').click() #Покупаем товар
+        
         try:
             driver.find_element_by_class_name('order-details')
         except:
@@ -249,6 +250,7 @@ class TerminalTest(unittest.TestCase):
             self.stat += 1
 
         print driver.current_url
+        driver.get_screenshot_as_file('logout.png')
         try: # проверяем наличие ссылок на соц. сети в футере
             driver.find_element_by_class_name('social')
         except:
@@ -289,14 +291,13 @@ class TerminalTest(unittest.TestCase):
             self.stat += 1
             print 'Cправа от информации о заказе есть виджет "ВКонтакте"'
         
-
+        
         try:
-            time.sleep(15)
-            driver.get_screenshot_as_file('logout.png')
-            logout = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, 'logout'))) # Ждем когда сообщение появится
-            if not logout.is_displayed():
-                self.stat += 1
-                print 'Сообщение об автовыходе не отображается'
+            
+            logout = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.ID, 'logout'))) # Ждем когда сообщение появится
+            #if not logout.is_displayed():
+            #    self.stat += 1
+            #    print 'Сообщение об автовыходе не отображается'
                 
         except: 
             print 'Отсутствует сообщение об автовыходе'
