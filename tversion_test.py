@@ -89,7 +89,6 @@ class TerminalTest(unittest.TestCase):
         self.stat = 0
 
         driver = webdriver.Firefox(self.profile)
-        driver.maximize_window()
 
         driver.get(self.ADRESS)
         self.common_signs(driver)
@@ -102,7 +101,6 @@ class TerminalTest(unittest.TestCase):
         self.stat = 0
         
         driver = webdriver.Firefox(self.profile)
-        driver.maximize_window()
                 
         for url in self.cat_url:
             driver.get('%scatalog/%s/?perPage=60' % (self.ADRESS, url))
@@ -146,7 +144,6 @@ class TerminalTest(unittest.TestCase):
                first()
         
         driver = webdriver.Firefox(self.profile)
-        driver.maximize_window()
    
         driver.get('%sproduct/%s/' % (self.ADRESS, item[0]))
         self.common_signs(driver)
@@ -168,7 +165,6 @@ class TerminalTest(unittest.TestCase):
         self.stat = 0
 
         driver = webdriver.Firefox(self.profile)
-        driver.maximize_window()
              
         driver.get('%snews/' % self.ADRESS)
         driver.find_element_by_class_name('bookmark').click()
@@ -220,7 +216,6 @@ class TerminalTest(unittest.TestCase):
                first()
 
         driver = webdriver.Firefox(self.profile)
-        driver.maximize_window()
         driver.get('%slogin/' % self.ADRESS)
         driver.find_element_by_id('username').send_keys(os.getenv('AUTH'))
         driver.find_element_by_id('password').send_keys(os.getenv('AUTHPASS'))
@@ -295,10 +290,10 @@ class TerminalTest(unittest.TestCase):
         
         time.sleep(15)    # Ждем когда сообщение появится
         try:
-            logout = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.ID, 'logout')))
-            if not logout.is_displayed():
-                self.stat += 1
-                print 'Сообщение об автовыходе не отображается'
+            WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, 'logout')))
+            #if not logout.is_displayed():
+            #    self.stat += 1
+            #    print 'Сообщение об автовыходе не отображается'
                 
         except:
             print 'Отсутствует сообщение об автовыходе'
