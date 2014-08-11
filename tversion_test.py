@@ -228,16 +228,14 @@ class TerminalTest(unittest.TestCase):
         time.sleep(5)
         driver.get('%sbasket/' % self.ADRESS)
         time.sleep(5)
-        #теперь нужно выбрать доставку, чтобы посмотреть появилась ли ссылка на дополнение адреса из профиля Яндекс
-        driver.find_element_by_css_selector("div.dcityContainer > span.radio").click()
-
+  
         try:# проверка на то, есть ли ссылка на дополнение адреса из профиля Яндекс
+            driver.find_element_by_css_selector("div.dcityContainer > span.radio").click()
             driver.find_element_by_class_name('control-group_address').find_element_by_tag_name('a')
-        except:
-            pass
-        else:
             self.stat += 1
             print 'В корзине присутствует ссылка на дополнение адреса из профиля Яндекс'
+        except:
+            pass
                 
         driver.find_element_by_id('personal_order_form_comment').send_keys('AutoTEST ORDER - TerminalVersion signs script')
         driver.find_element_by_class_name('btn-primary').click() #Покупаем товар
@@ -291,12 +289,14 @@ class TerminalTest(unittest.TestCase):
         
 
         try:
-            logout = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.ID, 'logout'))) # Ждем когда сообщение появится
+            time.sleep(15)
+            self.driver.get_screenshot_as_file('logout.png')
+            logout = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, 'logout'))) # Ждем когда сообщение появится
             if not logout.is_displayed():
                 self.stat += 1
                 print 'Сообщение об автовыходе не отображается'
                 
-        except:
+        except: 
             print 'Отсутствует сообщение об автовыходе'
             self.stat += 1
             
