@@ -292,8 +292,8 @@ class TerminalTest(unittest.TestCase):
         
         
         try:
-            driver.get_screenshot_as_file('logout.png')
             WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.ID, 'logout'))) # Ждем когда сообщение появится
+            driver.get_screenshot_as_file('logout.png')
                 
         except: 
             print 'Отсутствует сообщение об автовыходе'
