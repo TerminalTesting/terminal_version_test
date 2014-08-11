@@ -289,12 +289,12 @@ class TerminalTest(unittest.TestCase):
             self.stat += 1
             print 'Cправа от информации о заказе есть виджет "ВКонтакте"'
         
-        time.sleep(20)    # Ждем когда сообщение появится
+
         try:
-            logout = driver.find_element_by_id('prodpok')
-            #if not logout.is_displayed():
-            #    self.stat += 1
-             #   print 'Сообщение об автовыходе не отображается'
+            logout = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.ID, 'logout'))) # Ждем когда сообщение появится
+            if not logout.is_displayed():
+                self.stat += 1
+                print 'Сообщение об автовыходе не отображается'
                 
         except:
             print 'Отсутствует сообщение об автовыходе'
