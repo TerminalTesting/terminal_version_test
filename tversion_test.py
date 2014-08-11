@@ -292,7 +292,7 @@ class TerminalTest(unittest.TestCase):
 
         try:
             time.sleep(15)
-            self.driver.get_screenshot_as_file('logout.png')
+            driver.get_screenshot_as_file('logout.png')
             logout = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, 'logout'))) # Ждем когда сообщение появится
             if not logout.is_displayed():
                 self.stat += 1
