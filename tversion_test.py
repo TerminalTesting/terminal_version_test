@@ -13,6 +13,8 @@ import time
 
 
 class TerminalTest(unittest.TestCase):
+
+    os.system('find -iname \*.png -delete')
         
     def setUp(self):
         """Инициализация переменных для всех тестов"""
