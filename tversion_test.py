@@ -216,6 +216,7 @@ class TerminalTest(unittest.TestCase):
                first()
 
         driver = webdriver.Firefox(self.profile)
+
         driver.get('%slogin/' % self.ADRESS)
         driver.find_element_by_id('username').send_keys(os.getenv('AUTH'))
         driver.find_element_by_id('password').send_keys(os.getenv('AUTHPASS'))
@@ -288,12 +289,12 @@ class TerminalTest(unittest.TestCase):
             self.stat += 1
             print 'Cправа от информации о заказе есть виджет "ВКонтакте"'
         
-        time.sleep(15)    # Ждем когда сообщение появится
+        time.sleep(20)    # Ждем когда сообщение появится
         try:
-            WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, 'logout')))
+            logout = driver.find_element_by_id('prodpok')
             #if not logout.is_displayed():
             #    self.stat += 1
-            #    print 'Сообщение об автовыходе не отображается'
+             #   print 'Сообщение об автовыходе не отображается'
                 
         except:
             print 'Отсутствует сообщение об автовыходе'
