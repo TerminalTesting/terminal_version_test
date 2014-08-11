@@ -250,7 +250,6 @@ class TerminalTest(unittest.TestCase):
             self.stat += 1
 
         print driver.current_url
-        driver.get_screenshot_as_file('logout.png')
         try: # проверяем наличие ссылок на соц. сети в футере
             driver.find_element_by_class_name('social')
         except:
@@ -293,11 +292,8 @@ class TerminalTest(unittest.TestCase):
         
         
         try:
-            
-            logout = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.ID, 'logout'))) # Ждем когда сообщение появится
-            #if not logout.is_displayed():
-            #    self.stat += 1
-            #    print 'Сообщение об автовыходе не отображается'
+            driver.get_screenshot_as_file('logout.png')
+            WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.ID, 'logout'))) # Ждем когда сообщение появится
                 
         except: 
             print 'Отсутствует сообщение об автовыходе'
